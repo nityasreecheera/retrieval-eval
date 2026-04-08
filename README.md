@@ -31,19 +31,17 @@ No API key required. The dense and cross-encoder models download automatically o
 ## Results on sample dataset
 
 ```
-Strategy                      R@1     R@3     R@5     MRR     Latency
-------------------------------------------------------------------------
-BM25                          0.867   1.000   1.000   0.933   0.0ms
-TF-IDF                        0.867   1.000   1.000   0.933   0.1ms
-Hybrid (RRF)                  0.867   1.000   1.000   0.933   0.1ms
-Dense (Semantic)              0.867   1.000   1.000   0.933   4.5ms
-Cross-Encoder (Transformer)   1.000*  1.000*  1.000*  1.000*  203.4ms
+Strategy                      R@1     Latency
+----------------------------------------------
+BM25 (Keyword)                0.867   0.0ms
+Dense (Semantic)              0.867   4.5ms
+Cross-Encoder (Transformer)   1.000   203.4ms
 ```
 
 The cross-encoder achieves perfect retrieval at the cost of latency — 200x slower than BM25. In production, the right architecture is a two-stage pipeline: a fast retriever (BM25 or Dense) narrows to top-20 candidates, then the cross-encoder re-ranks them. The top result goes to the LLM.
 
 The failure analysis reveals *why* strategies fail differently:
-- BM25/Hybrid miss semantically framed questions ("what should I expect on my first day?")
+- BM25 misses semantically framed questions ("what should I expect on my first day?")
 - Dense misses exact keyword matches ("what was the main bottleneck for mobile performance?")
 - Cross-encoder gets both right by reading query and document together
 
