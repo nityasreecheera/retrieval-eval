@@ -10,13 +10,11 @@ When building RAG or knowledge systems over organizational data, you rarely have
 
 1. **Ingests** a folder of documents and splits them into chunks
 2. **Generates** realistic test questions from the corpus using an LLM (or uses built-in questions for the sample dataset)
-3. **Runs** five retrieval strategies against every question:
+3. **Runs** three retrieval strategies against every question:
    - BM25 (keyword matching)
-   - TF-IDF (cosine similarity)
-   - Hybrid RRF (combines BM25 + TF-IDF via Reciprocal Rank Fusion)
    - Dense (local semantic embeddings via fastembed)
    - Cross-Encoder (transformer-based re-ranking — most accurate)
-4. **Scores** each strategy on Recall@k, MRR, and latency per query
+4. **Scores** each strategy on Recall@1 and latency per query
 5. **Reports** which strategy wins and which questions every strategy fails on
 
 ## Quickstart
@@ -69,14 +67,14 @@ OPENAI_API_KEY=sk-... python examples/demo.py
 ```
 Documents → Chunking → LLM Question Generation (synthetic ground truth)
                                     ↓
-                          BM25 / TF-IDF / Hybrid / Dense / Cross-Encoder
+                               BM25 / Dense / Cross-Encoder
                                     ↓
                         Recall@k  |  MRR  |  Latency  |  Failure Analysis
 ```
 
 ## Design
 
-- **Zero external dependencies** for BM25, TF-IDF, and Hybrid — pure Python math
+- **Zero external dependencies** for BM25 — pure Python math
 - **No API key required** — Dense and Cross-Encoder run locally via fastembed
 - **Pluggable** — add any retriever that implements `.search(query, k)`
 - **Model-agnostic** — bring any OpenAI-compatible API for question generation
