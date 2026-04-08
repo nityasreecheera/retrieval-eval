@@ -1,0 +1,22 @@
+Sales Team Update — October 2024
+Author: Jordan Ferris, Head of Sales
+Distributed to: Leadership Team
+
+Pipeline Overview:
+Total pipeline value as of October 1: $4.2M across 23 active opportunities. This is up 18% from the same date in Q3. The average deal size has increased from $140K to $182K, reflecting our shift toward mid-market and enterprise accounts.
+
+Top Opportunities:
+1. Meridian Financial Group — $420K, procurement review stage. Legal redlines returned. Primary concern is data residency (they require US-only storage). James owns this, target close November 15.
+2. Lakeview Health System — $310K, technical evaluation. Their IT team is running a security review. We need to provide SOC 2 Type II report by October 18. Sarah from Solutions Engineering is coordinating.
+3. Cascade Logistics — $280K, verbal commit received. Contract being drafted. Expect signature by October 31.
+
+Deals Lost in Q3:
+We lost Thornfield Manufacturing ($190K) to a competitor on price. Post-mortem: we were 40% more expensive and couldn't justify the delta to a buyer focused purely on cost. Recommendation: develop a clearer ROI calculator for manufacturing use cases.
+
+Forecast:
+Conservative Q4 close: $1.1M. Optimistic: $1.6M if Meridian and Lakeview both close. We need Cascade to close on time to hit quota.
+
+Action Items:
+- Deliver SOC 2 report to Lakeview by October 18 (owner: Sarah)
+- Resolve data residency question for Meridian (owner: James + Engineering)
+- Finalize ROI calculator for manufacturing vertical (owner: Jordan + Marketing)

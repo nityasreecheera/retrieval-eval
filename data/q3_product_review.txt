@@ -1,0 +1,21 @@
+Q3 Product Review Meeting Notes
+Date: September 28, 2024
+Attendees: Priya Nair (CPO), Daniel Cho (Engineering Lead), Remi Okafor (Design), Sarah Lin (PM)
+
+Summary:
+The Q3 product review covered progress on three major initiatives: the new search experience, the permissions model redesign, and mobile performance improvements.
+
+Search Experience:
+The team shipped faceted search filters in August, which increased search engagement by 34%. However, user research from Remi's team showed that users struggle with empty result states — they don't know whether the system has no data or the query was poorly formed. Action item: Sarah to spec a "smart empty state" that suggests query reformulations by October 15.
+
+Permissions Model Redesign:
+Daniel's team completed the role-based access control (RBAC) refactor. All document-level permissions now propagate correctly through the inheritance chain. One outstanding issue: shared workspaces where a user belongs to multiple groups with conflicting permissions still fall back to most-permissive rather than most-restrictive. Daniel will patch this in Q4 sprint 1.
+
+Mobile Performance:
+Load times on mobile dropped from 4.2s to 1.8s after the lazy loading changes shipped in September. Target for Q4 is under 1.5s. The team identified that the main remaining bottleneck is the initial authentication token refresh, which blocks rendering.
+
+Q4 Priorities:
+1. Smart empty states for search (owner: Sarah)
+2. Fix conflicting permissions in shared workspaces (owner: Daniel)
+3. Authentication token refresh optimization (owner: Daniel's team)
+4. Begin scoping the collaborative annotations feature (owner: Priya + Remi)

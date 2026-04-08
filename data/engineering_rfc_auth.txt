@@ -1,0 +1,32 @@
+RFC-042: Authentication Token Refresh Redesign
+Author: Daniel Cho
+Status: Accepted
+Date: October 3, 2024
+
+Problem:
+The current authentication flow requires a synchronous token refresh on every cold app load. This refresh blocks the main render thread and is the primary cause of the 1.8s initial load time on mobile. The refresh involves a round-trip to the auth service, JWT validation, and session hydration before any UI can paint.
+
+Proposed Solution:
+Move to a background token refresh model with optimistic rendering. Specifically:
+1. Cache the last valid token in encrypted local storage with a 7-day TTL.
+2. On app load, immediately render using the cached token (optimistic).
+3. Trigger a background refresh in parallel with rendering.
+4. If the background refresh fails (token revoked, network error), redirect to login after render.
+
+Security Considerations:
+Cached tokens must be encrypted with a device-bound key. We will use the Web Crypto API (AES-GCM, 256-bit) for browsers and the Android Keystore / iOS Secure Enclave on mobile. Tokens must not be accessible to other apps or browser extensions.
+
+Rejected Alternatives:
+- Service worker caching: adds complexity and poor support on iOS Safari.
+- Reducing token TTL: doesn't solve the blocking render problem.
+- Removing token validation on load: unacceptable security tradeoff.
+
+Rollout Plan:
+Phase 1 (Week 1-2): Implement encrypted local storage layer, no behavior change.
+Phase 2 (Week 3-4): Enable optimistic rendering behind a feature flag for internal users.
+Phase 3 (Week 5-6): Gradual rollout to 10%, 50%, 100% of production users.
+
+Success Metrics:
+- P50 cold load time under 1.0s on mobile
+- Zero increase in unauthorized access incidents
+- Token refresh failure rate under 0.1%

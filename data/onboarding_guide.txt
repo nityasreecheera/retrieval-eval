@@ -1,0 +1,28 @@
+New Employee Onboarding Guide
+Last Updated: September 2024
+Owner: People Operations
+
+Welcome:
+Welcome to the team. This guide covers everything you need to get set up in your first two weeks. Your manager will schedule a 30-minute kickoff on your first day. If anything in this guide is unclear, reach out to People Ops at people@company.com.
+
+Week 1 — Setup and Orientation:
+Day 1: Laptop setup, account provisioning, office tour (or virtual equivalent for remote employees). IT will send your credentials before 9am on your start date.
+Day 2-3: Complete compliance training in Workday. This includes Security Awareness, Data Privacy, and Code of Conduct modules. All three must be completed within your first 5 business days.
+Day 4-5: Meet with your team, attend your first team standup, and get access to relevant Notion workspaces and Slack channels. Your manager will send an intro Slack message to the broader team.
+
+Week 2 — Ramp:
+Begin working on a starter task assigned by your manager. These are scoped to be completable within the first two weeks and are designed to introduce you to the codebase, workflows, and team norms. Ask questions freely — the team expects and welcomes them.
+
+Tools and Access:
+- Slack: primary communication
+- Notion: documentation and wikis
+- Rippling: HR, payroll, and PTO requests
+- GitHub: code repositories (engineering roles)
+- Linear: project and issue tracking (engineering and product roles)
+- Zoom: video meetings
+
+Equipment:
+You will receive a MacBook Pro (M3, 16GB RAM) as your primary machine. Engineers may request additional monitors or peripherals through IT within the first 30 days. Submit requests to it-requests@company.com.
+
+Benefits Enrollment:
+You have 30 days from your start date to enroll in health, dental, and vision benefits through Rippling. If you miss this window, you must wait until open enrollment in November. The company covers 90% of the premium for employee-only coverage and 70% for dependents.
