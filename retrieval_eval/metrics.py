@@ -4,9 +4,10 @@ Step 4: Evaluate retrieval quality.
 Metrics:
   Recall@k  — was the correct chunk in the top-k results?
   MRR       — mean reciprocal rank (how high up was the correct chunk?)
-  Precision@1 — was the very first result correct?
+  Latency   — average time per query in milliseconds
 """
 
+import time
 from .corpus import Chunk
 
 
@@ -36,26 +37,29 @@ def evaluate(
       {
         "recall@1": float, "recall@3": float, "recall@5": float,
         "mrr": float,
-        "failures": [{"question": str, "expected": str, "got": str}, ...]
+        "latency_ms": float,
+        "failures": [{"question": str, "expected_source": str, "top_retrieved_source": str}]
       }
     """
     recall_totals = {k: 0.0 for k in k_values}
     mrr_total = 0.0
+    latency_total = 0.0
     failures = []
     n = len(qa_pairs)
 
     for qa in qa_pairs:
         query = qa["question"]
         correct_id = qa["chunk_id"]
+
+        t0 = time.perf_counter()
         results = retriever.search(query, k=max(k_values))
+        latency_total += (time.perf_counter() - t0) * 1000  # ms
 
         for k in k_values:
             recall_totals[k] += recall_at_k(results, correct_id, k)
 
-        rr = reciprocal_rank(results, correct_id)
-        mrr_total += rr
+        mrr_total += reciprocal_rank(results, correct_id)
 
-        # Track failures (not in top-1)
         if recall_at_k(results, correct_id, k=1) == 0:
             top_result = results[0][0].source if results else "none"
             failures.append({
@@ -66,5 +70,6 @@ def evaluate(
 
     metrics = {f"recall@{k}": round(recall_totals[k] / n, 3) for k in k_values}
     metrics["mrr"] = round(mrr_total / n, 3)
+    metrics["latency_ms"] = round(latency_total / n, 1)
     metrics["failures"] = failures
     return metrics

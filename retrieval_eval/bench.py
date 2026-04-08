@@ -87,20 +87,21 @@ def _print_report(results, qa_pairs, k_values):
     print("=" * 60)
 
     k_headers = "  ".join(f"R@{k:<4}" for k in k_values)
-    print(f"\n{'Strategy':<20}  {k_headers}  {'MRR':<6}")
-    print("-" * 60)
+    print(f"\n{'Strategy':<28}  {k_headers}  {'MRR':<6}  {'Latency':<10}")
+    print("-" * 72)
 
     best = _best_per_metric(results, k_values)
 
     for name, metrics in results.items():
-        row = f"{name:<20}  "
+        row = f"{name:<28}  "
         for k in k_values:
             val = metrics[f"recall@{k}"]
             marker = "*" if val == best[f"recall@{k}"] else " "
             row += f"{val:.3f}{marker}  "
         mrr = metrics["mrr"]
         marker = "*" if mrr == best["mrr"] else " "
-        row += f"{mrr:.3f}{marker}"
+        row += f"{mrr:.3f}{marker}  "
+        row += f"{metrics['latency_ms']:.1f}ms"
         print(row)
 
     print("\n  * = best in column\n")
