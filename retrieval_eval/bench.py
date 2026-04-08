@@ -19,6 +19,12 @@ try:
 except ImportError:
     _DENSE_AVAILABLE = False
 
+try:
+    from .retrievers.reranker import CrossEncoderReranker
+    _RERANKER_AVAILABLE = True
+except ImportError:
+    _RERANKER_AVAILABLE = False
+
 
 def run_bench(data_dir, chunk_size=400, overlap=50, n_questions_per_chunk=2,
               k_values=(1, 3, 5), model="gpt-4o-mini"):
@@ -45,11 +51,19 @@ def run_bench(data_dir, chunk_size=400, overlap=50, n_questions_per_chunk=2,
         "Hybrid (RRF)": HybridRetriever(chunks),
     }
 
+    dense = None
     if _DENSE_AVAILABLE:
         print("      Loading dense embedding model (first run downloads ~25MB)...")
-        retrievers["Dense (Semantic)"] = DenseRetriever(chunks)
+        dense = DenseRetriever(chunks)
+        retrievers["Dense (Semantic)"] = dense
     else:
         print("      Dense retriever unavailable (run: pip install fastembed)")
+
+    if _RERANKER_AVAILABLE and dense is not None:
+        print("      Loading cross-encoder re-ranker (first run downloads ~85MB)...")
+        retrievers["Cross-Encoder (Transformer)"] = CrossEncoderReranker(chunks, first_stage_retriever=dense)
+    elif _RERANKER_AVAILABLE:
+        print("      Cross-encoder skipped (requires dense retriever)")
 
     print("\n[4/4] Running evaluation...\n")
     results = {}
