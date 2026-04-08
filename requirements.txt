@@ -1,7 +1,7 @@
-# Core — no dependencies needed for BM25, TF-IDF, hybrid, or evals
-# All retrieval and evaluation logic uses Python stdlib + math only.
+# Dense semantic retriever (local model, no API key required)
+fastembed>=0.3.0
 
-# Optional: LLM-powered question generation (Step 2)
+# Optional: LLM-powered question generation
 # If OPENAI_API_KEY is set, the harness uses this to generate test questions
 # from your corpus. Without it, the demo uses built-in sample questions.
 openai>=1.0.0

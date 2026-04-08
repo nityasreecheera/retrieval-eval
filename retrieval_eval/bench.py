@@ -6,7 +6,6 @@ Usage:
     run_bench("data/")
 """
 
-import os
 from .corpus import load_corpus
 from .synthetic import generate_questions
 from .retrievers.bm25 import BM25Retriever
@@ -22,7 +21,7 @@ except ImportError:
 
 
 def run_bench(data_dir, chunk_size=400, overlap=50, n_questions_per_chunk=2,
-              k_values=(1, 3, 5), model="gpt-4o-mini", api_key=None):
+              k_values=(1, 3, 5), model="gpt-4o-mini"):
     """Run the full retrieval eval pipeline and print a report."""
     print("=" * 60)
     print("  RETRIEVAL EVAL BENCH")
@@ -35,7 +34,7 @@ def run_bench(data_dir, chunk_size=400, overlap=50, n_questions_per_chunk=2,
 
     print("\n[2/4] Generating test questions...")
     qa_pairs = generate_questions(
-        chunks, n_per_chunk=n_questions_per_chunk, model=model, api_key=api_key,
+        chunks, n_per_chunk=n_questions_per_chunk, model=model,
     )
     print(f"      {len(qa_pairs)} questions generated")
 
@@ -47,14 +46,10 @@ def run_bench(data_dir, chunk_size=400, overlap=50, n_questions_per_chunk=2,
     }
 
     if _DENSE_AVAILABLE:
-        key = api_key or os.environ.get("OPENAI_API_KEY")
-        if key:
-            print("      Loading dense embedding model...")
-            retrievers["Dense (Semantic)"] = DenseRetriever(chunks, api_key=key)
-        else:
-            print("      Dense retriever skipped (set OPENAI_API_KEY to enable)")
+        print("      Loading dense embedding model (first run downloads ~25MB)...")
+        retrievers["Dense (Semantic)"] = DenseRetriever(chunks)
     else:
-        print("      Dense retriever unavailable (run: pip install openai)")
+        print("      Dense retriever unavailable (run: pip install fastembed)")
 
     print("\n[4/4] Running evaluation...\n")
     results = {}
