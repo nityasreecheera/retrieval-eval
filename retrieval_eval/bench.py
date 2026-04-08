@@ -101,7 +101,7 @@ def _print_report(results, qa_pairs, k_values):
         mrr = metrics["mrr"]
         marker = "*" if mrr == best["mrr"] else " "
         row += f"{mrr:.3f}{marker}  "
-        row += f"{metrics['latency_ms']:.1f}ms"
+        row += f"{metrics['latency_ms']:.2f}ms"
         print(row)
 
     print("\n  * = best in column\n")

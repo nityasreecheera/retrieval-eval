@@ -70,6 +70,6 @@ def evaluate(
 
     metrics = {f"recall@{k}": round(recall_totals[k] / n, 3) for k in k_values}
     metrics["mrr"] = round(mrr_total / n, 3)
-    metrics["latency_ms"] = round(latency_total / n, 1)
+    metrics["latency_ms"] = round(latency_total / n, 2)
     metrics["failures"] = failures
     return metrics

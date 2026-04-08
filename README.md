@@ -33,9 +33,9 @@ No API key required. The dense and cross-encoder models download automatically o
 ```
 Strategy                      R@1     Latency
 ----------------------------------------------
-BM25 (Keyword)                0.867   0.0ms
-Dense (Semantic)              0.867   4.5ms
-Cross-Encoder (Transformer)   1.000   203.4ms
+BM25 (Keyword)                0.867   0.02ms
+Dense (Semantic)              0.867   4.19ms
+Cross-Encoder (Transformer)   1.000   201.55ms
 ```
 
 The cross-encoder achieves perfect retrieval at the cost of latency — 200x slower than BM25. In production, the right architecture is a two-stage pipeline: a fast retriever (BM25 or Dense) narrows to top-20 candidates, then the cross-encoder re-ranks them. The top result goes to the LLM.
